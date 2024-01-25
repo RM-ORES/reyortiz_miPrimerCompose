@@ -2,6 +2,7 @@ package com.example.reyortiz_primercompose.ui
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.widget.DatePicker
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -51,6 +52,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -127,10 +130,11 @@ fun CreateButton(text: String, modifier: Modifier = Modifier, onClick: () -> Uni
     }
 }
 
+
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hi there $name!",
+        text = "sustancias",
         modifier = modifier
     )
 }
