@@ -3,7 +3,7 @@ package com.example.myapplication.domain.modelo
 import java.time.LocalDate
 
 data class Sustancia(
-    val id: Int,
+    val id: Int=0,
     var descripcion: String = "",
     var fecha: LocalDate? = null,
     var precio: Int? = null,

@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import data.Database
+import data.AppDatabase
 import data.SustanciaDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +18,10 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): Database {
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
         return Room.databaseBuilder(
             appContext,
-            Database::class.java,
+            AppDatabase::class.java,
             "app.db"
         ).fallbackToDestructiveMigration()
             .build()
@@ -32,7 +32,7 @@ class DatabaseModule {
     fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @Provides
-    fun provideMovieDao(database: Database): SustanciaDao {
-        return database.sustanciaDao()
+    fun provideMovieDao(appDatabase: AppDatabase): SustanciaDao {
+        return appDatabase.sustanciaDao()
     }
 }

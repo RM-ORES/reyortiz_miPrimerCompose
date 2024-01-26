@@ -74,8 +74,8 @@ fun Pantalla(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 TextField(value = "-", onValueChange = {}, label = { Text(text = "Nombre")})
-                val datePickerState = rememberDatePickerState(initialSelectedDateMillis = 1578096000000)
-                DatePicker(state = datePickerState, modifier = Modifier.padding(16.dp))
+//                val datePickerState = rememberDatePickerState(initialSelectedDateMillis = 1578096000000)
+//                DatePicker(state = datePickerState, modifier = Modifier.padding(16.dp))
                 val (checkedState, onStateChange) = remember { mutableStateOf(true) }
                 Row(
                     Modifier
