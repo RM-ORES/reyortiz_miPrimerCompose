@@ -11,6 +11,7 @@ import data.AppDatabase
 import data.SustanciaDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import utils.Constantes
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -22,7 +23,7 @@ class DatabaseModule {
         return Room.databaseBuilder(
             appContext,
             AppDatabase::class.java,
-            "app.db"
+            Constantes.APP_DB
         ).fallbackToDestructiveMigration()
             .build()
     }
@@ -32,7 +33,7 @@ class DatabaseModule {
     fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @Provides
-    fun provideMovieDao(appDatabase: AppDatabase): SustanciaDao {
+    fun provideSustanciaDao(appDatabase: AppDatabase): SustanciaDao {
         return appDatabase.sustanciaDao()
     }
 }

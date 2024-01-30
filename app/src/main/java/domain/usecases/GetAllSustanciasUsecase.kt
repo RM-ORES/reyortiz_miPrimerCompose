@@ -1,11 +1,12 @@
 package com.example.myapplication.domain.usecases
 
 import data.SustanciaRepository
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 
-class GetSustanciaUsecase @Inject constructor(
+class GetAllSustanciasUsecase @Inject constructor(
     private val sustanciaRepository: SustanciaRepository,
-) {
-    operator fun invoke(id: Int) = sustanciaRepository.getSustanciaById(id)
+){
+operator fun invoke() = sustanciaRepository.getSustancias()
 }

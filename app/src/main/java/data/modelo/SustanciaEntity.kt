@@ -2,10 +2,11 @@ package data.modelo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import utils.Constantes
 import java.time.LocalDate
 
 @Entity(
-    tableName = "sustancias"
+    tableName = Constantes.SUSTANCIAS
 )
 data class SustanciaEntity(
     var descripcion: String = "",

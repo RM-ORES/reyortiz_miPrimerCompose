@@ -7,6 +7,8 @@ import androidx.room.RoomDatabase
 
 import androidx.room.TypeConverters
 import data.modelo.SustanciaEntity
+import utils.Constantes
+
 
 @Database(entities = [SustanciaEntity::class], version = 6, exportSchema = true)
 @TypeConverters(Converters::class)
@@ -15,21 +17,18 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object{
         @Volatile
-        private var INSTANCE: data.AppDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): data.AppDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
+        fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    data.AppDatabase::class.java,
-                    "item_database")
-                    .createFromAsset("database/personas.db")
+                    AppDatabase::class.java,
+                    Constantes.ITEM_DATABASE)
+                    .createFromAsset(Constantes.DATABASE_PATH)
                     .fallbackToDestructiveMigrationFrom(4)
                     .build()
                 INSTANCE = instance
-                // return instance
                 instance
             }
         }

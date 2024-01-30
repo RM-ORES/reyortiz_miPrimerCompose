@@ -7,17 +7,18 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import data.modelo.SustanciaEntity
+import utils.Constantes
 
 @Dao
 interface SustanciaDao {
-    @Query("SELECT * from sustancias")
+    @Query(Constantes.SELECT_ALL)
     suspend fun getSustancias(): List<SustanciaEntity>
 
-    @Query("SELECT * from sustancias where sustancias.id = :id")
+    @Query(Constantes.SELECT_BY_ID)
     suspend fun getSustanciaById(id: Int): SustanciaEntity
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(item: SustanciaEntity) : Long
+    suspend fun insert(item: SustanciaEntity)
 
     @Update
     fun update(item: SustanciaEntity)

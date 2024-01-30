@@ -6,9 +6,9 @@ data class Sustancia(
     val id: Int=0,
     var descripcion: String = "",
     var fecha: LocalDate? = null,
-    var precio: Int? = null,
-    var legal: Boolean? = null,
+    var precio: Int? = 0,
+    var legal: Boolean? = false,
     var efecto: String? = null,
-    var potencia: Int? = null,
-    var valoracion: Int? = null,
+    var potencia: Int? = 0,
+    var valoracion: Int? = 0,
 )
