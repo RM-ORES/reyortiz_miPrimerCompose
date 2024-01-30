@@ -13,17 +13,19 @@ import javax.inject.Inject
 class SustanciaRepository @Inject constructor(
     private val sustanciaDao: SustanciaDao,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,) {
-    suspend fun getSustancias(): Flow<List<Sustancia>> {
+    fun getSustancias(): Flow<List<Sustancia>> {
         return flow {
             emit(sustanciaDao.getSustancias().map {it.toSustancia()})
         }.flowOn(dispatcher)
     }
-    suspend fun getSustanciaById(id:Int): Flow<Sustancia?> {
-        return flow{
+    fun getSustanciaById(id:Int): Flow<Sustancia?> {
+        return flow {
             emit(sustanciaDao.getSustanciaById(id).toSustancia())
         }.flowOn(dispatcher)
     }
-    suspend fun insertSustancia(sustancia: Sustancia) = sustanciaDao.insert(sustancia.toSustanciaEntity())
-    suspend fun updateSustancia(sustancia: Sustancia) = sustanciaDao.update(sustancia.toSustanciaEntity())
-    suspend fun deleteSustancia(sustancia: Sustancia) = sustanciaDao.delete(sustancia.toSustanciaEntity())
+    fun insertSustancia(sustancia: Sustancia) = flow { emit(sustanciaDao.insert(sustancia.toSustanciaEntity())) }.flowOn(dispatcher)
+
+    fun updateSustancia(sustancia: Sustancia) = flow { emit(sustanciaDao.update(sustancia.toSustanciaEntity())) }.flowOn(dispatcher)
+
+    fun deleteSustancia(sustancia: Sustancia) = flow { emit(sustanciaDao.delete(sustancia.toSustanciaEntity()))}.flowOn(dispatcher)
 }
