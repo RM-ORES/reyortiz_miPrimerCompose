@@ -6,14 +6,11 @@ import com.example.myapplication.domain.modelo.Sustancia
 import com.example.myapplication.domain.usecases.AddSustanciaUsecase
 import com.example.myapplication.domain.usecases.DeleteSustanciaUsecase
 import com.example.myapplication.domain.usecases.GetAllSustanciasUsecase
-import com.example.myapplication.domain.usecases.GetSustanciaUsecase
 import com.example.myapplication.domain.usecases.UpdateSustanciaUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import utils.Constantes
@@ -24,35 +21,32 @@ class MainViewModel @Inject constructor(
     private val addSustanciaUsecase: AddSustanciaUsecase,
     private val deleteSustanciaUsecase: DeleteSustanciaUsecase,
     private val updateSustanciaUsecase: UpdateSustanciaUsecase,
-    private val getSustanciaUsecase: GetSustanciaUsecase,
     private val getAllSustanciasUsecase: GetAllSustanciasUsecase,
 ) : ViewModel() {
-    private val _state: MutableStateFlow<MainState> by lazy {
-        MutableStateFlow(MainState())
-    }
+    private val _state: MutableStateFlow<MainState> = MutableStateFlow(MainState())
     val state: StateFlow<MainState> = _state
-    private var index = 0
-    private var sustancias = emptyList<Sustancia>()
+    private var _index = 0
+    private var _sustancias = emptyList<Sustancia>()
 
     init {
         getSustancias()
-        sustancias[index].let {
-            _state.value = MainState(
-                sustancia = it,
-
-                )
-        }
     }
 
     fun handleEvent(event: MainEvent) {
         when (event) {
+//            MainEvent.CambiarModo -> {
+//                if(_state.value.editMode){
+//                    _state.value = _state.value.copy(editMode = false)
+//                } else {
+//                    _state.value = _state.value.copy(editMode = true)
+//                }
+//            }
             MainEvent.ErrorVisto -> _state.value = _state.value.copy(error = null)
             MainEvent.Next -> next()
             MainEvent.Previous -> previous()
             MainEvent.GetSustancias -> getSustancias()
             is MainEvent.AddSustancia -> addSustancia(event.sustancia)
             is MainEvent.DeleteSustancia -> deleteSustancia(event.sustancia)
-            is MainEvent.GetSustancia -> getSustancia(event.id)
             is MainEvent.UpdateSustancia -> updateSustancia(event.sustancia)
         }
     }
@@ -62,26 +56,25 @@ class MainViewModel @Inject constructor(
             getAllSustanciasUsecase.invoke()
                 .catch(action = { cause ->
                     _state.update {
-                        it.copy(
-                            error = cause.message,
-                        )
+                        it.copy(error = cause.message)
                     }
                 }
                 ).collect { result ->
-                    sustancias = result
-                }
-        }
-    }
-
-    private fun getSustancia(id: Int) {
-        viewModelScope.launch {
-            getSustanciaUsecase.invoke(id)
-                .collect {
-                    _state.update {
-                        it.copy(
-
+                    _sustancias = result
+                    _sustancias[_index].let {
+                        _state.value = MainState(
+                            sustancia = it,
+                            descripcion = it.descripcion,
+                            fecha = it.fecha,
+                            precio = it.precio,
+                            legal = it.legal,
+                            efecto = it.efecto,
+                            potencia = it.potencia,
+                            valoracion = it.valoracion
                         )
                     }
+
+
                 }
         }
     }
@@ -129,9 +122,16 @@ class MainViewModel @Inject constructor(
     }
 
     private fun next() {
+        if(_sustancias[_index] != null){
+            _index += 1
+            _state.value = _state.value.copy(sustancia = _sustancias[_index])
+        }
     }
 
     private fun previous() {
-
+        if(_sustancias[_index - 1] != null){
+            _index -= 1
+            _state.value = _state.value.copy(sustancia = _sustancias[_index])
+        }
     }
 }

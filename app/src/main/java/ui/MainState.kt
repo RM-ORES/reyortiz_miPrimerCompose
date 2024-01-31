@@ -4,7 +4,8 @@ import com.example.myapplication.domain.modelo.Sustancia
 import java.time.LocalDate
 
 data class MainState(
-    val sustancia: Any = Sustancia(0),
+//    val editMode : Boolean = false,
+    val sustancia: Sustancia? = null,
     val error: String? = null,
     val descripcion: String? = "",
     val fecha: LocalDate? = null,

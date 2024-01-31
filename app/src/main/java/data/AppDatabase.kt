@@ -10,7 +10,7 @@ import data.modelo.SustanciaEntity
 import utils.Constantes
 
 
-@Database(entities = [SustanciaEntity::class], version = 6, exportSchema = true)
+@Database(entities = [SustanciaEntity::class], version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sustanciaDao(): SustanciaDao
@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     Constantes.ITEM_DATABASE)
                     .createFromAsset(Constantes.DATABASE_PATH)
-                    .fallbackToDestructiveMigrationFrom(4)
+                    .fallbackToDestructiveMigrationFrom(1)
                     .build()
                 INSTANCE = instance
                 instance
