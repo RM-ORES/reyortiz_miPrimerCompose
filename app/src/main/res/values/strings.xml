@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">reyortiz_miPrimerCompose</string>
+    <string name="eur_per_ud">%1$s €/ud</string>
 </resources>

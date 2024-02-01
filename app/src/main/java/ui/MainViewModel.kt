@@ -34,20 +34,21 @@ class MainViewModel @Inject constructor(
 
     fun handleEvent(event: MainEvent) {
         when (event) {
-//            MainEvent.CambiarModo -> {
-//                if(_state.value.editMode){
-//                    _state.value = _state.value.copy(editMode = false)
-//                } else {
-//                    _state.value = _state.value.copy(editMode = true)
-//                }
-//            }
-            MainEvent.ErrorVisto -> _state.value = _state.value.copy(error = null)
             MainEvent.Next -> next()
             MainEvent.Previous -> previous()
             MainEvent.GetSustancias -> getSustancias()
             is MainEvent.AddSustancia -> addSustancia(event.sustancia)
             is MainEvent.DeleteSustancia -> deleteSustancia(event.sustancia)
             is MainEvent.UpdateSustancia -> updateSustancia(event.sustancia)
+
+            is MainEvent.ChangeDescription ->_state.value = _state.value.copy(descripcion = event.valor)
+            is MainEvent.ChangeFecha ->_state.value = _state.value.copy(fecha = event.valor)
+            is MainEvent.ChangePrecio ->_state.value = _state.value.copy(precio = event.valor)
+            is MainEvent.ChangeLegal ->_state.value = _state.value.copy(legal = event.valor)
+            is MainEvent.ChangeEfecto ->_state.value = _state.value.copy(efecto = event.valor)
+            is MainEvent.ChangePotencia ->_state.value = _state.value.copy(potencia = event.valor)
+            is MainEvent.ChangeValoracion ->_state.value = _state.value.copy(valoracion = event.valor)
+
         }
     }
 

@@ -15,8 +15,6 @@ class SustanciaRepository @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,) {
     fun getSustancias(): Flow<List<Sustancia>> = flow { emit(sustanciaDao.getSustancias().map { it.toSustancia() }) }.flowOn(dispatcher)
 
-    fun getSustanciaById(id:Int): Flow<SustanciaEntity> = flow { emit(sustanciaDao.getSustanciaById(id)) }.flowOn(dispatcher)
-
     fun insertSustancia(sustanciaEntity: SustanciaEntity) = flow { emit(sustanciaDao.insert(sustanciaEntity)) }.flowOn(dispatcher)
 
     fun updateSustancia(sustanciaEntity: SustanciaEntity) = flow { emit(sustanciaDao.update(sustanciaEntity)) }.flowOn(dispatcher)

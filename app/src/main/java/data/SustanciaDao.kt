@@ -14,9 +14,6 @@ interface SustanciaDao {
     @Query(Constantes.SELECT_ALL)
     suspend fun getSustancias(): List<SustanciaEntity>
 
-    @Query(Constantes.SELECT_BY_ID)
-    suspend fun getSustanciaById(id: Int): SustanciaEntity
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: SustanciaEntity)
 
